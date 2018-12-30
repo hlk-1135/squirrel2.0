@@ -9,8 +9,8 @@
         <module name="squirrel" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="squirrel" target="1.5" />
+    <bytecodeTargetLevel target="8">
+      <module name="squirrel" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

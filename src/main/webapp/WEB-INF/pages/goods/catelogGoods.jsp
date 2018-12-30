@@ -10,11 +10,12 @@
 <head>
     <meta charset="utf-8" />
     <title>鲁大二手工坊</title>
+    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="<%=basePath%>css/index.css" />
     <script type="text/javascript" src="<%=basePath%>js/jquery.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/materialize.min.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/index.bundle.js" ></script>
-    <link rel="stylesheet" href="../css/materialize-icon.css" />
+    <link rel="stylesheet" href="<%=basePath%>css/materialize-icon.css" />
     <script>
         function showLogin() {
             if($("#signup-show").css("display")=='block'){
@@ -46,8 +47,8 @@
     </script>
 <body ng-view="ng-view">
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
+    作者：lyq
+    时间：2018-2-24 13:28:16
     描述：顶部
 -->
 <div ng-controller="headerController" class="header stark-components navbar-fixed ng-scope">
@@ -61,8 +62,9 @@
             <div class="nav-wrapper search-bar">
                 <form ng-submit="search()" class="ng-pristine ng-invalid ng-invalid-required" action="">
                     <div class="input-field">
-                        <input id="search" name="str" value="<c:out value="${search}"></c:out>" placeholder="搜点什么吧233..." style="height: 40px;"
+                        <input id="search" name="str" value="<c:out value="${search}"></c:out>" placeholder="搜点什么吧..." style="height: 40px;"
                                class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
+                        <input type="submit" class="btn"value="搜索"></input>
                         <label for="search" class="active">
                             <i ng-click="search()" class="iconfont"></i>
                         </label>
@@ -72,37 +74,37 @@
             <ul class="right">
                 <c:if test="${empty cur_user}">
                     <li class="publish-btn">
-                        <button ng-click="showLogin()" data-position="bottom" data-delay="50"
-                                data-tooltip="需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" data-tooltip-id="510d3084-e666-f82f-3655-5eae4304a83a"	>
+                      <button onclick="showLogin()" data-toggle="tooltip" 
+                                title="您需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" 	>
                             我要发布</button>
                     </li>
                 </c:if>
                 <c:if test="${!empty cur_user}">
                     <li class="publish-btn">
                         <button data-position="bottom" class="red lighten-1 waves-effect waves-light btn">
-                            <a href="/goods/publishGoods">我要发布</a>
+                            <a href="<%=basePath%>goods/publishGoods">我要发布</a>
                         </button>
                     </li>
                     <li>
-                        <a href="/user/allGoods">我发布的商品</a>
+                        <a href="<%=basePath%>user/allGoods">我发布的商品</a>
                     </li>
                     <li>
                         <a>${cur_user.username}</a>
                     </li>
-                    <li class="notification">
+                    <!-- <li class="notification">
                         <i ng-click="showNotificationBox()" class="iconfont"></i>
                         <div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
-                    </li>
+                    </li> -->
                     <li class="changemore">
                         <a class="changeMoreVertShow()">
                             <i class="iconfont"></i>
                         </a>
                         <div class="more-vert">
                             <ul class="dropdown-content">
-                                <li><a href="/user/home">个人中心</a></li>
-                                <li><a>消息</a></li>
+                                <li><a href="<%=basePath%>/user/home">个人中心</a></li>
+                                 <li><a href="<%=basePath%>user/allFocus">我的关注</a></li>
                                 <li><a onclick="ChangeName()">更改用户名</a></li>
-                                <li><a href="/user/logout">退出登录</a></li>
+                                <li><a href="<%=basePath%>/user/logout">退出登录</a></li>
                             </ul>
                         </div>
                     </li>
@@ -120,8 +122,6 @@
     </nav>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
     描述：登录
 -->
 <div ng-controller="loginController" class="ng-scope">
@@ -131,7 +131,7 @@
                 <a onclick="showLogin()">
                     <div class="col s12 title"></div>
                 </a>
-                <form:form action="/user/login" method="post" commandName="user" role="form">
+                <form:form action="../user/login" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>手机</label>
@@ -139,7 +139,7 @@
                     <div class="input-field col s12">
                         <input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
                         <label>密码</label>
-                        <a ng-click="showForget()" class="forget-btn">忘记密码？</a>
+                       <!--  <a ng-click="showForget()" class="forget-btn">忘记密码？</a> -->
                     </div>
                     <button type="submit" class="waves-effect waves-light btn login-btn red lighten-1">
                         <i class="iconfont left"></i>
@@ -156,8 +156,6 @@
     </div>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-06
     描述：注册
 -->
 <div ng-controller="signupController" class="ng-scope">
@@ -167,7 +165,7 @@
                 <a onclick="showSignup()">
                     <div class="col s12 title"></div>
                 </a>
-                <form:form action="/user/addUser" method="post" commandName="user" role="form">
+                <form:form action="../user/addUser" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>昵称</label>
@@ -203,7 +201,7 @@
                 <div class="col s12 title">
                     <h1>修改用户名</h1>
                 </div>
-                <form:form action="/user/changeName" method="post" commandName="user" role="form">
+                <form:form action="../user/changeName" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>修改用户名</label>
@@ -220,19 +218,18 @@
     </div>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
+
     描述：左侧导航条
 -->
 <div ng-controller="sidebarController" class="sidebar stark-components ng-scope">
     <li ng-class="{true: 'active'}[isAll]">
-        <a href="<%=basePath%>goods/catelog/1" class="index">
+        <a href="<%=basePath%>goods/catelog" class="index">
             <img src="<%=basePath%>img/index.png">
             <em>最新发布</em>
         </a>
     </li>
     <li ng-class="{true: 'active'}[isDigital]">
-        <a href="/goods/catelog/1" class="digital">
+        <a href="<%=basePath%>goods/catelog/1" class="digital">
             <img src="<%=basePath%>img/digital.png"  />
             <em>闲置数码</em>
         </a>
@@ -276,22 +273,21 @@
     <div class="info">
         <a href="" target="_blank">关于我们</a><em>-</em>
         <a href="">联系我们</a>
-        <p>©2017 LDUACM工作室</p>
+        <p>©2018 鲁大二手工坊</p>
     </div>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
+
     描述：右侧显示部分
 -->
 <div class="main-content">
     <!--
-        作者：hlk_1135@outlook.com
-        时间：2017-05-05
+
         描述：最新发布
     -->
     <div class="index-title">
-        <a href="">${catelog.name}</a>
+        <c:if test="${empty catelog.name}"><a href="">最新发布</a></c:if>
+         <c:if test="${!empty catelog.name}"><a href="">${catelog.name}</a></c:if>
         <hr class="hr1">
         <hr class="hr2">
     </div>

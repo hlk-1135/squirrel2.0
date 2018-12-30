@@ -1,5 +1,9 @@
 package com.ldu.pojo;
-
+/**
+ * 图片
+ * @author lyq
+ *
+ */
 public class Image {
     private Integer id;
 

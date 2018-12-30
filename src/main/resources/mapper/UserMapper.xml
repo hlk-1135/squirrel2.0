@@ -9,7 +9,7 @@
     <result column="QQ" property="qq" jdbcType="VARCHAR" />
     <result column="create_at" property="createAt" jdbcType="VARCHAR" />
     <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
-    <result column="power" property="power" jdbcType="TINYINT" />
+    <result column="power" property="power" jdbcType="INTEGER" />
     <result column="last_login" property="lastLogin" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
@@ -23,12 +23,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getUserList" resultMap="BaseResultMap" parameterType="String">
-    select <include refid="Base_Column_List" /> from user where 1=1
-    <if test="username != null">
-      <![CDATA[
-        and username like CONCAT('%',#{username,jdbcType=VARCHAR}, '%')
-      ]]>
-    </if>
+    select <include refid="Base_Column_List" /> from user
   </select>
   <!--根据手机号查询用户-->
   <select id="getUserByPhone" resultMap="BaseResultMap" parameterType="String" >
@@ -37,18 +32,41 @@
     from user
     where phone = #{phone,jdbcType=CHAR}
   </select>
+  
+  <select id="getUserById" resultMap="BaseResultMap" parameterType="Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+   <!--根据手机号 用户名 qq查询用户-->
+  <select id="getUserListByUser" resultMap="BaseResultMap" parameterType="String">
+    select * from user where 1=1  
+    <if test="phone != '' and phone != null" >
+    AND phone like concat('%',#{phone},'%') 
+    </if>
+    <if test="username != '' and username != null" >
+    AND username like concat('%',#{username},'%') 
+    </if>
+    <if test=" qq != '' and qq != null" >
+    AND qq like concat('%',#{qq},'%')
+    </if>
+    </select>
+	<select id="getUserListOrderByCreateAt" resultMap="BaseResultMap" parameterType="String">
+	    select <include refid="Base_Column_List" /> from user Order By create_at Desc
+	</select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ldu.pojo.User" >
+  <insert id="insert" parameterType="com.ldu.pojo.User" useGeneratedKeys="true" keyProperty="id">
     insert into user (id, phone, username, 
       password, QQ, create_at, 
       goods_num, power, last_login, 
       status)
     values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, 
       #{password,jdbcType=CHAR}, #{qq,jdbcType=VARCHAR}, #{createAt,jdbcType=VARCHAR}, 
-      #{goodsNum,jdbcType=INTEGER}, #{power,jdbcType=TINYINT}, #{lastLogin,jdbcType=VARCHAR}, 
+      #{goodsNum,jdbcType=INTEGER}, #{power,jdbcType=INTEGER}, #{lastLogin,jdbcType=VARCHAR}, 
       #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.ldu.pojo.User" >
@@ -108,7 +126,7 @@
         #{goodsNum,jdbcType=INTEGER},
       </if>
       <if test="power != null" >
-        #{power,jdbcType=TINYINT},
+        #{power,jdbcType=INTEGER},
       </if>
       <if test="lastLogin != null" >
         #{lastLogin,jdbcType=VARCHAR},
@@ -140,7 +158,7 @@
         goods_num = #{goodsNum,jdbcType=INTEGER},
       </if>
       <if test="power != null" >
-        power = #{power,jdbcType=TINYINT},
+        power = #{power,jdbcType=INTEGER},
       </if>
       <if test="lastLogin != null" >
         last_login = #{lastLogin,jdbcType=VARCHAR},
@@ -159,7 +177,7 @@
       QQ = #{qq,jdbcType=VARCHAR},
       create_at = #{createAt,jdbcType=VARCHAR},
       goods_num = #{goodsNum,jdbcType=INTEGER},
-      power = #{power,jdbcType=TINYINT},
+      power = #{power,jdbcType=INTEGER},
       last_login = #{lastLogin,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
@@ -169,4 +187,5 @@
     goods_num = #{goodsNum,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
 </mapper>

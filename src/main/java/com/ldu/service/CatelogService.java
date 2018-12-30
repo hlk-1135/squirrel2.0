@@ -1,9 +1,8 @@
 package com.ldu.service;
 
-import com.ldu.pojo.Catelog;
-import com.ldu.pojo.Goods;
-
 import java.util.List;
+
+import com.ldu.pojo.Catelog;
 
 /**
  * Created by lenovo on 2017/5/9.

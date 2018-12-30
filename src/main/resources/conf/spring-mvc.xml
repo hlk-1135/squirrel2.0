@@ -17,7 +17,9 @@
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
-    <context:component-scan base-package="com.ldu.controller"/>
+<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
+<context:component-scan base-package="com.ldu.*" />
+    
     <!-- 处理请求时返回json字符串的中文乱码问题 -->
     <mvc:annotation-driven>
         <mvc:message-converters>
@@ -42,14 +44,16 @@
     <mvc:resources location="/css/"  mapping="/css/**" />
     <mvc:resources location="/img/"  mapping="/img/**" />
     <mvc:resources location="/fonts/"  mapping="/fonts/**" />
+    <mvc:resources location="/font-awesome/"  mapping="/font-awesome/**" />
+     <mvc:resources location="/pages/"  mapping="/pages/register.jsp" />
     <mvc:resources location="/WEB-INF/pages/error/" mapping="/WEB-INF/pages/error/**"/> 
     <mvc:resources location="/upload/" mapping="/upload/**"/> 
+    
     <!-- 视图解析器 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-    <!-- 文件上传 -->
     <!-- 文件上传 -->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

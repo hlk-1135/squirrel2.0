@@ -1,11 +1,12 @@
 package com.ldu.dao;
 
-import com.ldu.pojo.User;
 import org.apache.ibatis.annotations.Param;
+
+import com.ldu.pojo.User;
 
 import java.util.List;
 
-public interface UserMapper {
+public interface UserMapper{
     int deleteByPrimaryKey(Integer id);
 
     int insert(User record);
@@ -22,5 +23,13 @@ public interface UserMapper {
 
     int updateGoodsNum(@Param("id") Integer id, @Param("goodsNum") Integer goodsNum);//更改用户的商品数量
 
-    public List<User> getUserList(@Param("username") String username);
+    public List<User> getUserList();//获取所有用户
+
+	int findCount();
+
+	User getUserById(int id);
+
+	List<User> getUserListByUser(@Param("phone") String phone,@Param("username") String username,@Param("qq") String qq);
+
+	List<User> getUserListOrderByCreateAt();
 }

@@ -1,15 +1,33 @@
 package com.ldu.pojo;
-
+/**
+ * 评论
+ * @author lyq
+ *
+ */
 public class Comments {
     private Integer id;
-
-    private Integer userId;
-
-    private Integer goodsId;
-
+    private User user;
     private String createAt;
-
+    private Integer goodsId;
+    private Goods goods;
     private String content;
+    
+    public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
+	public Integer getGoodsId() {
+		return goodsId;
+	}
+
+	public void setGoodsId(Integer goodsId) {
+		this.goodsId = goodsId;
+	}
+
 
     public Integer getId() {
         return id;
@@ -19,22 +37,15 @@ public class Comments {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
-    }
+    public User getUser() {
+		return user;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public Integer getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(Integer goodsId) {
-        this.goodsId = goodsId;
-    }
-
+	
     public String getCreateAt() {
         return createAt;
     }
@@ -50,4 +61,16 @@ public class Comments {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Comments [id=" + id + ", user=" + user + ", createAt=" + createAt + ", goodsId=" + goodsId + ", goods="
+				+ goods + ", content=" + content + "]";
+	}
+
+
+ 
+	
+    
+    
 }

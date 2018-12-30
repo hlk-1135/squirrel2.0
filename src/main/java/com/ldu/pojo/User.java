@@ -1,6 +1,11 @@
 package com.ldu.pojo;
 
-public class User {
+/**
+ * 用户
+ * @author lyq
+ *
+ */
+public class User{
     private Integer id;
 
     private String phone;
@@ -15,12 +20,12 @@ public class User {
 
     private Integer goodsNum;
 
-    private Byte power;
+    private Integer power;
 
     private String lastLogin;
 
     private Byte status;
-
+   
     public Integer getId() {
         return id;
     }
@@ -77,11 +82,11 @@ public class User {
         this.goodsNum = goodsNum;
     }
 
-    public Byte getPower() {
+    public Integer getPower() {
         return power;
     }
 
-    public void setPower(Byte power) {
+    public void setPower(Integer power) {
         this.power = power;
     }
 
@@ -100,4 +105,16 @@ public class User {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", phone=" + phone + ", username=" + username + ", password=" + password + ", qq="
+				+ qq + ", createAt=" + createAt + ", goodsNum=" + goodsNum + ", power=" + power + ", lastLogin="
+				+ lastLogin + ", status=" + status + "]";
+	}
+
+
+
+    
+    
 }

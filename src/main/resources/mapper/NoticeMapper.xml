@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ldu.dao.NoticeMapper" >
-  <resultMap id="BaseResultMap" type="com.ldu.pojo.Notice" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
-    <result column="create_at" property="createAt" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ldu.pojo.Notice" extends="BaseResultMap" >
-    <result column="context" property="context" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, user_id, create_at, status
-  </sql>
-  <sql id="Blob_Column_List" >
-    context
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from notice
-    where id = #{id,jdbcType=INTEGER}
+	<resultMap id="BaseResultMap" type="com.ldu.pojo.Notice" >
+	  <id column="id" property="id" jdbcType="INTEGER" />
+	  <result column="create_at" property="createAt" jdbcType="VARCHAR" />
+	  <result column="context" property="context" jdbcType="LONGVARCHAR" />
+	  <result column="status" property="status" jdbcType="TINYINT" />
+	  <association property="user"  javaType="com.ldu.pojo.User" resultMap="userMap"/>
+	</resultMap>
+	<resultMap id="userMap" type="com.ldu.pojo.User" >
+	   <id column="id" property="id" jdbcType="INTEGER" />
+	   <result column="phone" property="phone" jdbcType="CHAR" />
+	   <result column="username" property="username" jdbcType="VARCHAR" />
+	   <result column="password" property="password" jdbcType="CHAR" />
+	   <result column="QQ" property="qq" jdbcType="VARCHAR" />
+	   <result column="ucreate_at" property="createAt" jdbcType="VARCHAR" />
+	   <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+	   <result column="power" property="power" jdbcType="INTEGER" />
+	   <result column="last_login" property="lastLogin" jdbcType="VARCHAR" />
+	   <result column="status" property="status" jdbcType="TINYINT" />
+	</resultMap>
+  <select id="getNoticeList" resultMap="BaseResultMap">
+     select * from notice n,user u where n.user_id=u.id order by n.create_at desc
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+   <insert id="insertSelective" parameterType="com.ldu.pojo.Notice" >
+	 insert into notice(id,user_id,create_at,context,status) values(#{id},#{user.id},#{createAt},#{context},#{status})
+  </insert>
+  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from notice
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -103,5 +105,5 @@
       create_at = #{createAt,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+  </update> -->
 </mapper>

@@ -1,5 +1,9 @@
 package com.ldu.pojo;
-
+/**
+ * 分类
+ * @author lyq
+ *
+ */
 public class Catelog {
     private Integer id;
 

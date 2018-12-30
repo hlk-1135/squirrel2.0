@@ -4,9 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.ldu.dao.UserMapper;
 import com.ldu.pojo.User;
 import com.ldu.service.UserService;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.util.List;
 
 @Service("userService")
@@ -37,15 +43,74 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public List<User> getPageUser(Integer page, Integer pageSize,String username) {
-        PageHelper.startPage(page,pageSize);
-        List<User> data= userMapper.getUserList(username);
-        System.out.println("UserServiceImpl:"+data.size());
-        return data;
+    //获取出当前页用户
+    public List<User> getPageUser(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);//分页核心代码
+        List<User> list= userMapper.getUserList();
+        return list;
     }
 
-    public int getUserNum(String username) {
-        List<User> users = userMapper.getUserList(username);
+    //获取出用户的数量
+    public int getUserNum() {
+        List<User> users = userMapper.getUserList();
         return users.size();
     }
+
+
+    public static HttpSession getSession() {
+        HttpSession session = null;
+        try {
+            session = getRequest().getSession();
+        } catch (Exception e) {}
+        return session;
+    }
+
+    public static HttpServletRequest getRequest() {
+        ServletRequestAttributes attrs =(ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return attrs.getRequest();
+    }
+
+	public int getUserNum(String username) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public InputStream getInputStream1SS() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<User> getPageUser(int pageNum, int pageSize, String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUserById(int id) {
+		
+		return userMapper.getUserById(id);
+	}
+
+	@Override
+	public void deleteUserById(String ids) {
+		this.userMapper.deleteByPrimaryKey(Integer.parseInt(ids));
+		
+	}
+
+	@Override
+	public List<User> getPageUserByUser(String phone, String username, String qq, int pageNum, int pageSize) {
+	 PageHelper.startPage(pageNum,pageSize);//分页核心代码
+	 List<User> list= userMapper.getUserListByUser(phone,username,qq);
+	 return list;
+	
+	}
+
+	@Override
+	public List<User> getUserOrderByDate(int size) {
+		PageHelper.startPage(1, size);
+		 List<User> list = userMapper.getUserListOrderByCreateAt();
+		return list;
+	}
+
+
 }

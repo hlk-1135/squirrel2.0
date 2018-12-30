@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+	<!--配置别名  -->
     <typeAliases>
         <typeAlias alias="User" type="com.ldu.pojo.User"/>
+        <typeAlias alias="Goods" type="com.ldu.pojo.Goods"/>
     </typeAliases>
     <plugins>
         <!-- com.github.pagehelper为PageHelper类所在包名 -->

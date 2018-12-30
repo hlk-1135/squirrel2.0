@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ldu.dao.PurseMapper">
+	<resultMap id="BaseResultMap" type="com.ldu.pojo.Purse">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="balance" property="balance" jdbcType="REAL" />
+		<result column="recharge" property="recharge" jdbcType="REAL" />
+		<result column="withdrawals" property="withdrawals" jdbcType="REAL" />
+		<result column="state" property="state" jdbcType="INTEGER" />
+	</resultMap>
+
+	<update id="updatePurseByuserId">
+
+		UPDATE purse SET balance=balance+#{1} WHERE user_id = #{0};
+
+	</update>
+	
+	<update id="updatePurseOfdel">
+
+		UPDATE purse SET balance=balance-#{1} WHERE user_id = #{0};
+
+	</update>
+	<update id="updateByPrimaryKey">
+
+		UPDATE purse SET state=#{state,jdbcType=INTEGER} WHERE id = #{id};
+
+	</update>
+	
+	<insert id="addPurse" parameterType="java.lang.Integer">
+    INSERT INTO purse(user_id) VALUES(#{userId});
+	</insert>
+	
+	<select id="selectPurseByUserId"  resultMap="BaseResultMap">
+ 	 select * from purse where user_id = #{user_id,jdbcType=INTEGER}
+  	</select>
+  	<select id="selectPurseById"  resultMap="BaseResultMap">
+ 	 select * from purse where id = #{id,jdbcType=INTEGER}
+  	</select>
+  	
+  	<select id="selectPurseList"  resultMap="BaseResultMap">
+ 	 select * from purse
+  	</select>
+  	
+  	<select id="getPagePurseByPurse"  resultMap="BaseResultMap" resultType="java.lang.Integer">
+ 	 select * from purse where 1=1
+ 	 <if test="userId != null and userId != ''">
+ 	 and user_id like concat('%',#{userId},'%')
+ 	 </if>
+ 	 <if test="state != null">
+ 	 and state  like concat('%',#{state},'%')
+ 	 </if>
+ 	 
+  	</select>
+  	
+
+ 	<update id="updatePurse" parameterType="java.lang.Integer" >
+    update purse 
+    <set >
+      <if test="recharge != null" >
+        recharge = #{recharge,jdbcType=REAL},
+      </if>
+      <if test="withdrawals != null" >
+        withdrawals = #{withdrawals,jdbcType=REAL},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <!-- 审核 -->
+  <update id="updatePurseById" parameterType="java.lang.Integer" >
+    update purse 
+    <set >
+     <if test="balance != null" >
+    	balance =#{balance,jdbcType=REAL},
+     </if>
+      <if test="recharge != null" >
+        recharge =null,
+      </if>
+      <if test="withdrawals != null" >
+        withdrawals =null,
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

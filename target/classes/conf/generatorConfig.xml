@@ -15,7 +15,7 @@
 
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://118.89.183.98:3306/squirrel"
+                        connectionURL="jdbc:mysql://localhost:3306/squirrel"
                         userId="squirrel"
                         password="lduyfla">
         </jdbcConnection>

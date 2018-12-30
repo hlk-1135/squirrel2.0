@@ -10,6 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>修改商品</title>
+    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css" />
     <link rel="stylesheet" href="<%=basePath%>css/userhome.css" />
     <link rel="stylesheet" href="<%=basePath%>css/user.css" />
@@ -38,11 +39,10 @@
             </a>
         </div>
         <!--
-            作者：hlk_1135@outlook.com
-            时间：2017-05-10
+
             描述：左侧个人中心栏
         -->
-        <div id="user_nav">
+         <div id="user_nav">
             <div class="user_info">
                 <div class="head_img">
                     <img src="<%=basePath%>img/photo.jpg">
@@ -50,44 +50,50 @@
                 <div class="big_headimg">
                     <img src="">
                 </div>
-                <span class="name">${cur_user.username}</span>
-                <span class="school">鲁东大学</span>
-                <span class="name">闲置数量：${cur_user.goodsNum}</span>
+                <span class="name">${cur_user.username}</span><hr>
+              <!--   <span class="school">莆田学院</span> -->
+                <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);" href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
+                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
+                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
+                <span class="btn" data-toggle="modal" data-target="#myModal" style="width: 98%;background-color: rgb(79, 190, 246); color:rgba(255, 255, 255, 1);margin-top:0.5cm;">
+                	我的信用积分：${cur_user.power}
+                </span>
+                
             </div>
             <div class="home_nav">
                 <ul>
-                    <a href="">
+                    <a href="<%=basePath%>orders/myOrders">
                         <li class="notice">
                             <div></div>
-                            <span>我的消息</span>
+                            <span>订单中心</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="">
+                    <a href="<%=basePath%>user/allFocus">
                         <li class="fri">
                             <div></div>
                             <span>关注列表</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="/user/basic">
-                        <li class="set">
-                            <div></div>
-                            <span>个人设置</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                    <a href="/goods/publishGoods">
+                    <a href="<%=basePath%>goods/publishGoods">
                         <li class="store">
                             <div></div>
                             <span>发布物品</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="/user/allGoods">
+                    <a href="<%=basePath%>user/allGoods">
                         <li class="second">
                             <div></div>
                             <span>我的闲置</span>
+                            <strong></strong>
+                        </li>
+                    </a>
+                    <a href="<%=basePath%>user/basic">
+                        <li class="set">
+                            <div></div>
+                            <span>个人设置</span>
                             <strong></strong>
                         </li>
                     </a>
@@ -95,13 +101,12 @@
             </div>
         </div>
         <!--
-	            作者：hlk_1135@outlook.com
-	            时间：2017-05-10
+
 	            描述：发布物品
         -->
         <div id="user_content">
             <div class="basic">
-                <form:form action="/goods/editGoodsSubmit" method="post" role="form" enctype="multipart/form-data">
+                <form:form action="../../goods/editGoodsSubmit" method="post" role="form" enctype="multipart/form-data">
                     <h1 style="margin-left: 210px;">修改物品信息</h1><hr />
                     <div class="changeinfo">
                         <span>物品名：</span>
@@ -151,7 +156,7 @@
                                 <div class="col-sm-6 col-sm-offset-1">
                                     <div class="form-group">
                                         <div class="col-sm-10">
-                                            <img src="<%=basePath%>upload/${goodsExtend.images[0].imgUrl}"/>
+                                            <img src="<%=basePath%>upload/${goodsExtend.images[0].imgUrl}" style="width:450px;higth:350px;"/>
                                             <input type="hidden" name="imgUrl" value="${goodsExtend.images[0].imgUrl}">
                                             <input type="hidden" name="id" value="${goodsExtend.goods.id}">
                                             <input type="hidden" name="startTime" value="${goodsExtend.goods.startTime}">
@@ -166,8 +171,7 @@
                 </form:form>
             </div>
             <!--
-                作者：hlk_1135@outlook.com
-                时间：2017-05-10
+
                 描述：最右侧，可能认识的人
             -->
             <div class="recommend">
@@ -195,7 +199,7 @@
                         <a href="" class="head_img">
                             <img src="<%=basePath%>img/photo3.jpg">
                         </a>
-                        <span>策马奔腾hly</span>
+                        <span>hly</span>
                         <div class="fa fa-plus-square"></div>
                     </li>
                     <li>

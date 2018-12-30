@@ -1,5 +1,9 @@
 package com.ldu.pojo;
-
+/**
+ * 商品
+ * @author lyq
+ *
+ */
 public class Goods {
     private Integer id;
 
@@ -19,7 +23,7 @@ public class Goods {
 
     private String polishTime;
 
-    private Integer commetNum;
+    private Integer status;
 
     private String describle;
 
@@ -87,15 +91,17 @@ public class Goods {
         this.endTime = endTime == null ? null : endTime.trim();
     }
 
-    public Integer getCommetNum() {
-        return commetNum;
-    }
 
-    public void setCommetNum(Integer commetNum) {
-        this.commetNum = commetNum;
-    }
 
-    public String getDescrible() {
+    public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getDescrible() {
         return describle;
     }
 
@@ -110,4 +116,13 @@ public class Goods {
     public void setPolishTime(String polishTime) {
         this.polishTime = polishTime;
     }
+
+	@Override
+	public String toString() {
+		return "Goods [id=" + id + ", catelogId=" + catelogId + ", userId=" + userId + ", name=" + name + ", price="
+				+ price + ", realPrice=" + realPrice + ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", polishTime=" + polishTime + ", status=" + status + ", describle=" + describle + "]";
+	}
+    
+    
 }

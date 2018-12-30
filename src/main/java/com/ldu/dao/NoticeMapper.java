@@ -1,6 +1,9 @@
 package com.ldu.dao;
 
+import java.util.List;
+
 import com.ldu.pojo.Notice;
+import com.ldu.pojo.NoticeExtend;
 
 public interface NoticeMapper {
     int deleteByPrimaryKey(Integer id);
@@ -10,6 +13,8 @@ public interface NoticeMapper {
     int insertSelective(Notice record);
 
     Notice selectByPrimaryKey(Integer id);
+    
+	public List<Notice> getNoticeList();
 
     int updateByPrimaryKeySelective(Notice record);
 

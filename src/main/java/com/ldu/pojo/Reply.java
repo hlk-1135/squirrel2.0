@@ -1,5 +1,9 @@
 package com.ldu.pojo;
-
+/**
+ * 回复
+ * @author lyq
+ *
+ */
 public class Reply {
     private Integer id;
 

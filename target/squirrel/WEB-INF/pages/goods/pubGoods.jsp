@@ -10,17 +10,19 @@
 <head>
     <meta charset="UTF-8">
     <title>发布商品</title>
-    <link rel="stylesheet" href="../css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../css/userhome.css" />
-    <link rel="stylesheet" href="../css/user.css" />
-    <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
+    <link rel="stylesheet" href="<%=basePath%>css/font-awesome.min.css" />
+    <link rel="stylesheet" href="<%=basePath%>css/userhome.css" />
+    <link rel="stylesheet" href="<%=basePath%>css/user.css" />
+    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+   <!-- bootstrap -->
+    <link rel="stylesheet" href="<%=basePath%>css/bootstrap.min.css" />
+    <script type="text/javascript" src="<%=basePath%>js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>js/bootstrap.min.js"></script>
     <!-- 图片上传即使预览插件 -->
-    <link rel="stylesheet" href="../css/fileinput.min.css">
-    <script type="text/javascript" src="../js/fileinput.min.js"></script>
-    <script type="text/javascript" src="../js/zh.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>css/fileinput.min.css">
+    <script type="text/javascript" src="<%=basePath%>js/fileinput.min.js"></script>
+    <script type="text/javascript" src="<%=basePath%>js/zh.js"></script>
 
     <style>
         .container{padding-top:10px}
@@ -36,13 +38,15 @@
             <a href="<%=basePath%>goods/homeGoods">
                 <h1 class="logo"></h1>
             </a>
-            <a href="/user/home">
+            <a href="<%=basePath%>user/home">
+                 <img src="<%=basePath%>img/home_header.png"  style="margin-left: 20px;" >
+            </a>
+            <a href="<%=basePath%>user/home">
                 <div class="home"></div>
             </a>
         </div>
         <!--
-            作者：hlk_1135@outlook.com
-            时间：2017-05-10
+
             描述：左侧个人中心栏
         -->
         <div id="user_nav">
@@ -53,44 +57,48 @@
                 <div class="big_headimg">
                     <img src="">
                 </div>
-                <span class="name">${cur_user.username}</span>
-                <span class="school">鲁东大学</span>
-                <span class="name">闲置数量：${cur_user.goodsNum}</span>
+                <span class="name">${cur_user.username}</span><hr>
+              <!--   <span class="school">鲁东大学</span> -->
+                 <a class="btn" style="width: 98%;background-color: rgb(79, 190, 246);color:rgba(255, 255, 255, 1);" href="<%=basePath%>user/myPurse">我的钱包：￥${myPurse.balance}</a>
+                <input type="hidden" value="${myPurse.recharge}" id="recharge"/>
+                <input type="hidden" value="${myPurse.withdrawals}" id="withdrawals"/>
+               <span class="btn" data-toggle="modal" data-target="#myModal" style="width: 98%;background-color: rgb(79, 190, 246); color:rgba(255, 255, 255, 1);margin-top:0.5cm;">我的信用积分：${cur_user.power}</span>
+                
             </div>
             <div class="home_nav">
                 <ul>
-                    <a href="">
+                    <a href="<%=basePath%>orders/myOrders">
                         <li class="notice">
                             <div></div>
-                            <span>我的消息</span>
+                            <span>订单中心</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="">
+                    <a href="<%=basePath%>user/allFocus">
                         <li class="fri">
                             <div></div>
                             <span>关注列表</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="/user/basic">
-                        <li class="set">
-                            <div></div>
-                            <span>个人设置</span>
-                            <strong></strong>
-                        </li>
-                    </a>
-                    <a href="/goods/publishGoods">
+                    <a href="<%=basePath%>goods/publishGoods">
                         <li class="store">
                             <div></div>
                             <span>发布物品</span>
                             <strong></strong>
                         </li>
                     </a>
-                    <a href="/user/allGoods">
+                    <a href="<%=basePath%>user/allGoods">
                         <li class="second">
                             <div></div>
                             <span>我的闲置</span>
+                            <strong></strong>
+                        </li>
+                    </a>
+                    <a href="<%=basePath%>user/basic">
+                        <li class="set">
+                            <div></div>
+                            <span>个人设置</span>
                             <strong></strong>
                         </li>
                     </a>
@@ -98,13 +106,12 @@
             </div>
         </div>
         <!--
-	            作者：hlk_1135@outlook.com
-	            时间：2017-05-10
+
 	            描述：发布物品
         -->
         <div id="user_content">
             <div class="basic">
-                <form:form action="/goods/publishGoodsSubmit" method="post" role="form" enctype="multipart/form-data">
+                <form:form action="../goods/publishGoodsSubmit" method="post" role="form" enctype="multipart/form-data">
                     <h1 style="margin-left: 210px;">发布物品</h1><hr />
                     <div class="changeinfo">
                         <span>物品名：</span>
@@ -166,8 +173,7 @@
                 </form:form>
             </div>
             <!--
-                作者：hlk_1135@outlook.com
-                时间：2017-05-10
+
                 描述：最右侧，可能认识的人
             -->
             <div class="recommend">
@@ -217,6 +223,7 @@
         </div>
     </div>
 </div>
+
 <script>
     $(".myfile").fileinput({
         uploadUrl:"<%=basePath%>goods/uploadFile",//上传的地址

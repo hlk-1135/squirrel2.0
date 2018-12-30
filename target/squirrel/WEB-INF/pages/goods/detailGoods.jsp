@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <title>鲁大二手工坊</title>
+    <link rel="icon" href="<%=basePath%>img/logo.jpg" type="image/x-icon"/>
     <link rel="stylesheet" href="<%=basePath%>css/index.css" />
     <script type="text/javascript" src="<%=basePath%>js/jquery.js" ></script>
     <script type="text/javascript" src="<%=basePath%>js/materialize.min.js" ></script>
@@ -17,7 +18,7 @@
     <link rel="stylesheet" href="<%=basePath%>css/materialize-icon.css" />
     <link rel="stylesheet" href="<%=basePath%>css/detail.css" />
     <script>
-        function showLogin() {
+       function showLogin() {
             if($("#signup-show").css("display")=='block'){
                 $("#signup-show").css("display","none");
             }
@@ -45,10 +46,26 @@
             }
         }
     </script>
+    
+    <script type="text/javascript">
+    
+    function  addFocus(id) {
+    	location.href = '<%=basePath%>user/addFocus/'+id
+    	alert("已关注成功，查看关注列表~")
+    	
+    }
+    
+	/* 前往支付 */
+    function  toPay(id) {
+    	window.location.href = '<%=basePath%>goods/buyId/'+id
+    }
+	
+    </script>
+    
+    
 <body ng-view="ng-view">
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
+
     描述：顶部
 -->
 <div ng-controller="headerController" class="header stark-components navbar-fixed ng-scope">
@@ -60,50 +77,54 @@
                 <em class="em3">ldu.market</em>
             </a>
             <div class="nav-wrapper search-bar">
-                <form ng-submit="search()" class="ng-pristine ng-invalid ng-invalid-required">
+                <form ng-submit="search()" class="ng-pristine ng-invalid ng-invalid-required" action="<%=basePath%>goods/search">
                     <div class="input-field">
-                        <input id="search" placeholder="搜点什么吧233..." value="<c:out value="${search}"></c:out>" style="height: 40px;"
+                        <input id="search" name="str" placeholder="搜点什么吧..." style="height: 40px;"
                                class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"/>
+                        <input type="submit" class="btn"value="搜索"></input>
                         <label for="search" class="active">
                             <i ng-click="search()" class="iconfont"></i>
                         </label>
+                         
                     </div>
+                   
                 </form>
             </div>
             <ul class="right">
                 <c:if test="${empty cur_user}">
                     <li class="publish-btn">
-                        <button ng-click="showLogin()" data-position="bottom" data-delay="50"
-                                data-tooltip="需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" data-tooltip-id="510d3084-e666-f82f-3655-5eae4304a83a"	>
+                        <button onclick="showLogin()" data-toggle="tooltip" 
+                                title="您需要先登录哦！" class="red lighten-1 waves-effect waves-light btn" 	>
                             我要发布</button>
+                          
                     </li>
                 </c:if>
                 <c:if test="${!empty cur_user}">
                     <li class="publish-btn">
                         <button data-position="bottom" class="red lighten-1 waves-effect waves-light btn">
-                            <a href="/goods/publishGoods">我要发布</a>
+                            <a href="<%=basePath%>goods/publishGoods">我要发布</a>
                         </button>
                     </li>
                     <li>
-                        <a href="/user/allGoods">我发布的商品</a>
+                        <a href="<%=basePath%>user/allGoods">我发布的商品</a>
                     </li>
                     <li>
                         <a>${cur_user.username}</a>
                     </li>
-                    <li class="notification">
+                   <!--  <li class="notification">
                         <i ng-click="showNotificationBox()" class="iconfont"></i>
                         <div ng-show="notification.tagIsShow" class="notification-amount red lighten-1 ng-binding ng-hide">0 </div>
-                    </li>
+                    </li> -->
                     <li class="changemore">
                         <a class="changeMoreVertShow()">
                             <i class="iconfont"></i>
                         </a>
                         <div class="more-vert">
                             <ul class="dropdown-content">
-                                <li><a href="/user/home">个人中心</a></li>
-                                <li><a>消息</a></li>
+                                <li><a href="<%=basePath%>user/home">个人中心</a></li>
+                                 <li><a href="<%=basePath%>user/allFocus">我的关注</a></li>
                                 <li><a onclick="ChangeName()">更改用户名</a></li>
-                                <li><a href="/user/logout">退出登录</a></li>
+                                <li><a href="<%=basePath%>user/logout">退出登录</a></li>
                             </ul>
                         </div>
                     </li>
@@ -121,8 +142,7 @@
     </nav>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-05
+
     描述：登录
 -->
 <div ng-controller="loginController" class="ng-scope">
@@ -132,7 +152,7 @@
                 <a onclick="showLogin()">
                     <div class="col s12 title"></div>
                 </a>
-                <form:form action="/user/login" method="post" commandName="user" role="form">
+                <form action="<%=basePath%>user/login" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="phone" required="required" pattern="^1[0-9]{10}$" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>手机</label>
@@ -140,7 +160,7 @@
                     <div class="input-field col s12">
                         <input type="password" name="password" required="required" class="validate ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" />
                         <label>密码</label>
-                        <a ng-click="showForget()" class="forget-btn">忘记密码？</a>
+                        <!-- <a ng-click="showForget()" class="forget-btn">忘记密码？</a> -->
                     </div>
                     <button type="submit" class="waves-effect waves-light btn login-btn red lighten-1">
                         <i class="iconfont left"></i>
@@ -151,14 +171,13 @@
                         <a onclick="showSignup()" class="signup-btn">注册</a>
                         <em>吧！</em>
                     </div>
-                </form:form>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <!--
-    作者：hlk_1135@outlook.com
-    时间：2017-05-06
+
     描述：注册
 -->
 <div ng-controller="signupController" class="ng-scope">
@@ -168,7 +187,7 @@
                 <a onclick="showSignup()">
                     <div class="col s12 title"></div>
                 </a>
-                <form:form action="/user/addUser" method="post" commandName="user" role="form">
+                <form:form action="../../user/addUser" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>昵称</label>
@@ -204,7 +223,7 @@
                 <div class="col s12 title">
                     <h1>修改用户名</h1>
                 </div>
-                <form:form action="/user/changeName" method="post" commandName="user" role="form">
+                <form:form action="../../user/changeName" method="post" commandName="user" role="form">
                     <div class="input-field col s12">
                         <input type="text" name="username" required="required" class="validate ng-pristine ng-empty ng-invalid ng-invalid-required ng-valid-pattern ng-touched" />
                         <label>修改用户名</label>
@@ -243,6 +262,7 @@
     <div class="col s6">
         <h1 class="item-name">${goodsExtend.goods.name}</h1>
         <h2 class="item-price">${goodsExtend.goods.price}</h2>
+        <h2 class="publisher-info-title">原价：<span style="text-decoration:line-through;">${goodsExtend.goods.realPrice}</span></h2>
         <div class="item-public-info">
             <p class="bargain">可讲价</p>
             <p>
@@ -281,27 +301,38 @@
                     <div class="base-blue z-depth-1 attr">
                         <i class="iconfont"></i>
                     </div>
+                    <c:if test="${seller.qq!=null}">
                     <div class="value">${seller.qq}</div>
+                    </c:if>
+                    <c:if test="${seller.qq==null}">
+                    <div class="value">该同学没留下QQ</div>
+                    </c:if>
+                    
                 </div>
                 <div>
-                    <div class="base-blue z-depth-1 attr">
-                        <i class="iconfont"></i>
-                    </div>
-                    <div class="value"></div>
+              
+               <input type="button" value="加入关注" class="blue lighten-1 waves-effect waves-light btn" id="btn_cart" onclick="addFocus(${goodsExtend.goods.id})"></input>
+               <c:if test="${cur_user.id==goodsExtend.goods.userId}">
+               <input type="button" value="在线支付" data-toggle="tooltip"  title="不可以购买自己的东西哦~" disabled="disabled" class="blue lighten-1 waves-effect waves-light btn" id="btn_buy"></input>
+                </c:if>
+                <c:if test="${cur_user.id!=goodsExtend.goods.userId}">
+               <input type="button" value="在线支付"  class="blue lighten-1 waves-effect waves-light btn" id="btn_buy" onclick="toPay(${goodsExtend.goods.id})"></input>
+                </c:if>
                 </div>
+                
             </div>
         </c:if>
         <h1 class="item-pub-time">发布于 ${goodsExtend.goods.startTime}</h1>
     </div>
 </div>
 <div class="detail-box stark-components z-depth-1 row">
-    <h1 class="title">商品详情</h1>
+    <h1 class="title">商品描述</h1>
     <hr class="hr1" />
     <hr class="hr2" />
-    <p class="section">${goodsExtend.goods.describle}</p>
+    <p class="section">描述：${goodsExtend.goods.describle}</p>
     <p class="section"></p>
     <p class="section">
-        联系我的时候，请说明是在鲁大Squirrel校园二手工坊上看见的哦~
+        联系我的时候，请说明是在“鲁大二手工坊”上看见的哦~
     </p>
 </div>
 <div class="row detail-area">
@@ -310,31 +341,69 @@
             <h1 class="title">评论</h1>
             <hr class="hr1" />
             <hr class="hr2" />
+            <c:forEach var="item" items="${CommentExtend.comments}"  >
             <div class="comment-collection">
                 <div class="comment-item ng-scope">
                     <div class="comment-main-content">
-                        <em class="name ng-binding">hlk_1135:</em>
+               <em class="name ng-binding">${item.user.username}:</em>
                         <em class="ng-hide">回复</em>
                         <em class="name ng-binding ng-hide">@:</em>
-                        <em class="ng-binding">不错。</em>
+                        <em class="ng-binding">${item.content}</em>
                     </div>
                     <div class="comment-function">
-                        <em class="time ng-biinding">2017/05/15 16:45:54</em>
-                        <a class="reply-or-delete">删除</a>
-                        <a class="reply-or-delete">回复</a>
+                        <em class="time ng-biinding">${item.createAt}</em>
+                       
+                       <!--  <a class="reply-or-delete">删除</a>
+                        <a class="reply-or-delete">回复</a> -->
                     </div>
                 </div>
             </div>
+             </c:forEach>
+          <form id="addCommentForm" class="form-horizontal" >
             <div class="comment-add row">
                 <div class="input-field col s12">
                     <i class="iconfont prefix"></i>
-                    <input id="commentbox" type="text" class="validate ng-pristine ng-untouched ng-valid ng-empty"/>
+                    <input id="goodsId" name="goods.id" value="${goodsExtend.goods.id}" type="hidden"/>
+                    <input id="commentbox" type="text" name="content" class="validate ng-pristine ng-untouched ng-valid ng-empty"/>
                     <label for="commentbox">这里写下评论</label>
+                    <c:if test="${!empty cur_user}">
+                    <button type="button" class="waves-effect wave-light btn comment-submit" onclick="addComments()">确认</button>
+                    </c:if>
+                   <%--   <c:if test="${!empty cur_user} && ${cur_user.id!=goodsExtend.comments.userId}">
                     <button type="submit" class="waves-effect wave-light btn comment-submit">确认</button>
+                    </c:if>
+                     <c:if test="${!empty cur_user} && ${cur_user.id==goodsExtend.comments.userId}">
+                    <button data-toggle="tooltip"  title="您已经评论过了哦！" disabled="disabled"  class="waves-effect wave-light btn comment-submit">确认</button>
+                    </c:if> --%>
+                     <c:if test="${empty cur_user}">
+                    <button href="javacript:void(0);" data-toggle="tooltip"  title="您需要先登录哦！" disabled="disabled" class="waves-effect wave-light btn comment-submit">确认</button>
+                    </c:if>
+                   
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
 </body>
+<script type="text/javascript">
+/* 评论 */
+function addComments(){
+	$.ajax({
+		url:'<%=basePath%>goods/addComments',
+		type:'POST',
+		data:$('#addCommentForm').serialize(),// 序列化表单值  
+		dataType:'json',
+	/* 	success:function(json){
+			alert(1)
+			alert(json.msg)
+		},
+		error:function(){
+			alert('请求超时或系统出错!');
+		} */
+	});
+	alert("您已评论成功~")
+	window.location.reload();
+}
+</script>
 </html>

@@ -2,52 +2,55 @@ package com.ldu.pojo;
 
 public class Notice {
     private Integer id;
-
-    private Integer userId;
-
     private String createAt;
 
     private Byte status;
 
     private String context;
+    
+    private User user;
 
-    public Integer getId() {
-        return id;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public Integer getUserId() {
-        return userId;
-    }
+	public String getCreateAt() {
+		return createAt;
+	}
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
+	}
 
-    public String getCreateAt() {
-        return createAt;
-    }
+	public Byte getStatus() {
+		return status;
+	}
 
-    public void setCreateAt(String createAt) {
-        this.createAt = createAt == null ? null : createAt.trim();
-    }
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
 
-    public Byte getStatus() {
-        return status;
-    }
+	public String getContext() {
+		return context;
+	}
 
-    public void setStatus(Byte status) {
-        this.status = status;
-    }
+	public void setContext(String context) {
+		this.context = context;
+	}
 
-    public String getContext() {
-        return context;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    
+
+	
 }
